@@ -7,13 +7,18 @@ import java.util.Arrays;
 public class Ventana extends JFrame implements ActionListener {
     private JPanel panel1, panel2;
     private JButton btn1, btn2, btn3;
-    private JTextField username, newuser;
+    private JTextField username, newUser;
     private JPasswordField pass;
     private JList<String> list;
     private JTextArea text;
-    private JLabel usrLbl, passLbl;
 
-    void mostrarVentana(){
+    private static void panelAddAll(JPanel panel, Component... components) {
+        for (Component component : components) {
+            panel.add(component);
+        }
+    }
+
+    void mostrarVentana() {
 
         setSize(400, 300);
         panel1 = logInPanel();
@@ -24,17 +29,17 @@ public class Ventana extends JFrame implements ActionListener {
         setDefaultCloseOperation(3);
     }
 
-    private JPanel logInPanel(){
+    private JPanel logInPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        usrLbl = new JLabel("Usuario (fran)");
+        JLabel usrLbl = new JLabel("Usuario (fran)");
         usrLbl.setBounds(50, 50, 100, 25);
 
         username = new JTextField();
         username.setBounds(205, 50, 145, 25);
 
-        passLbl = new JLabel("Clave (clave)");
+        JLabel passLbl = new JLabel("Clave (clave)");
         passLbl.setBounds(50, 100, 100, 25);
 
         pass = new JPasswordField();
@@ -48,12 +53,12 @@ public class Ventana extends JFrame implements ActionListener {
         btn2.setBounds(205, 200, 145, 25);
         btn2.addActionListener(this);
 
-        panelAddAll(panel, usrLbl,username,passLbl,pass,btn1,btn2);
+        panelAddAll(panel, usrLbl, username, passLbl, pass, btn1, btn2);
 
         return panel;
     }
 
-    private JPanel listPanel(){
+    private JPanel listPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
@@ -65,19 +70,19 @@ public class Ventana extends JFrame implements ActionListener {
         listScroller.setBounds(25, 25, 75, 200);
 
 
-        newuser = new JTextField();
-        newuser.setBounds(145,(getHeight()/2)-50,80, 25);
+        newUser = new JTextField();
+        newUser.setBounds(145, (getHeight() / 2) - 50, 80, 25);
 
         btn3 = new JButton("Agregar");
-        btn3.setBounds(145,getHeight()/2,80, 25);
+        btn3.setBounds(145, getHeight() / 2, 80, 25);
         btn3.addActionListener(this);
 
 
         text = new JTextArea();
         JScrollPane textScroller = new JScrollPane(text);
-        textScroller.setBounds(getWidth()-135, 25, 100, 200);
+        textScroller.setBounds(getWidth() - 135, 25, 100, 200);
 
-        panelAddAll(panel,newuser,listScroller,btn3,textScroller);
+        panelAddAll(panel, newUser, listScroller, btn3, textScroller);
 
         return panel;
     }
@@ -85,31 +90,23 @@ public class Ventana extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         Object btn = actionEvent.getSource();
-        if(btn == btn1){
-            if("fran".equals(username.getText()) && Arrays.equals("clave".toCharArray(),pass.getPassword())) {
+        if (btn == btn1) {
+            if ("fran".equals(username.getText()) && Arrays.equals("clave".toCharArray(), pass.getPassword())) {
                 remove(panel1);
                 add(panel2);
                 setVisible(true);
-            }else JOptionPane.showMessageDialog(this, "Acceso Denegado");
-
-
-        }else if ( btn == btn2){
+            } else JOptionPane.showMessageDialog(this, "Acceso Denegado");
+        } else if (btn == btn2) {
             username.setText("");
             pass.setText("");
-        }else if ( btn == btn3 ){
-            if(list.isSelectionEmpty()){
+        } else if (btn == btn3) {
+            if (list.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debes elegir 1 curso");
-            }else if(newuser.getText().length() < 2) {
+            } else if (newUser.getText().length() < 2) {
                 JOptionPane.showMessageDialog(this, "Nombre invalido");
-            }else{
-                text.append(newuser.getText() + " " + list.getSelectedValue() + "\n");
+            } else {
+                text.append(newUser.getText() + " " + list.getSelectedValue() + "\n");
             }
-        }
-    }
-
-    private static void panelAddAll(JPanel panel, Component... components){
-        for (Component component : components) {
-            panel.add(component);
         }
     }
 }
